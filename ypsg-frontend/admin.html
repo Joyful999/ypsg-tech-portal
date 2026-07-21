@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel — YPSG Tech Portal</title>
+<meta name="description" content="Admin dashboard for the YPSG Youth Tech Empowerment Seminar — manage participants and certificates.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/auth.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-body">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="admin">
+
+  <!-- ============ SIDEBAR ============ -->
+  <aside class="admin-sidebar" id="adminSidebar">
+    <div class="admin-sidebar__top">
+      <a href="index.html" class="navbar__logo">
+        <img src="logo.png" alt="" style="width: 70px; height: 70px; border-radius: 50%;">
+        <!-- <span class="navbar__logo-mark">
+          <svg viewBox="0 0 40 40" width="30" height="30">
+            <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M20 6 L20 14 M20 26 L20 34 M6 20 L14 20 M26 20 L34 20" stroke="currentColor" stroke-width="1.4"/>
+            <circle cx="20" cy="20" r="5" fill="currentColor"/>
+          </svg>
+        </span> -->
+        <span class="navbar__logo-text">YPSG<span>Admin</span></span>
+      </a>
+      <button class="admin-sidebar__close" id="sidebarClose" aria-label="Close menu"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+
+    <nav class="admin-nav">
+      <a href="#overview" class="admin-nav__link active" data-nav="overview"><i class="fa-solid fa-gauge-high"></i> Dashboard</a>
+      <a href="#users" class="admin-nav__link" data-nav="users"><i class="fa-solid fa-users"></i> Participants</a>
+    </nav>
+
+    <div class="admin-sidebar__foot">
+      <a href="index.html" class="admin-sidebar__link"><i class="fa-solid fa-arrow-left-long"></i> Back to site</a>
+      <button class="admin-sidebar__link admin-sidebar__link--danger" id="logoutBtn"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</button>
+    </div>
+  </aside>
+
+  <div class="admin-sidebar__backdrop" id="sidebarBackdrop"></div>
+
+  <!-- ============ MAIN ============ -->
+  <div class="admin-content">
+    <header class="admin-topbar">
+      <button class="admin-topbar__burger" id="sidebarOpen" aria-label="Open menu"><i class="fa-solid fa-bars"></i></button>
+      <div>
+        <p class="eyebrow">Admin Panel</p>
+        <h1 id="pageTitle">Overview</h1>
+      </div>
+      <div class="dash-avatar" title="Admin">A</div>
+    </header>
+
+    <main id="main" class="admin-main">
+
+      <!-- ============ STATS ============ -->
+      <section class="stats-grid" data-reveal>
+        <div class="stat-card">
+          <div class="stat-card__icon"><i class="fa-solid fa-users"></i></div>
+          <div>
+            <span class="stat-card__label">Total Users</span>
+            <strong class="stat-card__value" id="statTotalUsers">0</strong>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon stat-card__icon--gold"><i class="fa-solid fa-certificate"></i></div>
+          <div>
+            <span class="stat-card__label">Certificates Generated</span>
+            <strong class="stat-card__value" id="statGenerated">0</strong>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon stat-card__icon--success"><i class="fa-solid fa-paper-plane"></i></div>
+          <div>
+            <span class="stat-card__label">Certificates Sent</span>
+            <strong class="stat-card__value" id="statSent">0</strong>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card__icon stat-card__icon--warn"><i class="fa-solid fa-hourglass-half"></i></div>
+          <div>
+            <span class="stat-card__label">Pending Emails</span>
+            <strong class="stat-card__value" id="statPending">0</strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ USER MANAGEMENT ============ -->
+      <section class="card users-card" id="users" data-reveal>
+        <div class="users-toolbar">
+          <div class="field field--search">
+            <div class="field__control">
+              <i class="fa-solid fa-magnifying-glass"></i>
+              <input type="text" id="searchInput" placeholder="Search by name or email…">
+            </div>
+          </div>
+
+          <select id="statusFilter" class="select">
+            <option value="all">All statuses</option>
+            <option value="generated">Generated</option>
+            <option value="not_generated">Not Generated</option>
+            <option value="pending">Pending Email</option>
+          </select>
+
+          <button class="btn btn--ghost" id="exportBtn"><i class="fa-solid fa-file-arrow-down"></i> Export CSV</button>
+        </div>
+
+        <div class="table-wrap">
+          <table class="users-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Registered</th>
+                <th>Certificate</th>
+                <th class="th-actions">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="usersTableBody">
+              <!-- rows injected by admin.js -->
+            </tbody>
+          </table>
+          <p class="table-empty" id="tableEmpty" hidden>No participants match your search.</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ============ TOAST NOTIFICATION ============ -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <i class="fa-solid fa-circle-check"></i>
+  <span id="toastMessage">Success.</span>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/auth-common.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

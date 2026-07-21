@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YPSG Tech Portal — Youth Tech Empowerment Seminar</title>
+<meta name="description" content="Official registration and certificate platform for the YPSG Youth Tech Empowerment Seminar — preparing the youth for a better future through technology and innovation.">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ================= SKIP LINK ================= -->
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ================= NAVIGATION ================= -->
+<nav class="navbar" id="navbar">
+  <div class="navbar__inner">
+    <a href="#home" class="navbar__logo">
+      <img src="logo.png" alt="" style="width: 70px; height: 70px; border-radius: 50%;">
+      <!-- <span class="navbar__logo-mark" aria-hidden="true">
+        <svg viewBox="0 0 40 40" width="34" height="34">
+          <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="1.4"/>
+          <path d="M20 6 L20 14 M20 26 L20 34 M6 20 L14 20 M26 20 L34 20" stroke="currentColor" stroke-width="1.4"/>
+          <circle cx="20" cy="20" r="5" fill="currentColor"/>
+        </svg>
+      </span> -->
+      <span class="navbar__logo-text">YPSG<span>Tech Portal</span></span>
+    </a>
+
+    <ul class="navbar__links" id="navLinks">
+      <li><a href="#home" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#topics">Topics</a></li>
+      <li><a href="#benefits">Benefits</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+
+    <div class="navbar__actions">
+      <a href="login.html" class="btn btn--ghost">Login</a>
+      <a href="register.html" class="btn btn--solid">Register</a>
+      <button class="navbar__burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero" id="home">
+    <div class="hero__pattern" aria-hidden="true"></div>
+    <canvas class="hero__particles" id="particles" aria-hidden="true"></canvas>
+    <div class="hero__overlay"></div>
+
+    <div class="hero__content">
+      <p class="eyebrow eyebrow--light" data-reveal>YPSG Youth Tech Empowerment Seminar</p>
+      <h1 class="hero__headline" data-reveal>
+        <span class="hero__line" style="--d:0">Preparing the Youth</span>
+        <span class="hero__line" style="--d:1">for a Better Future Through</span>
+        <span class="hero__line hero__line--accent" style="--d:2">Technology &amp; Innovation</span>
+      </h1>
+      <p class="hero__sub" data-reveal>
+        Hosted by the Yoruba Political Support Group — a seminar built to equip young minds
+        with the digital skills, mentorship, and confidence to shape tomorrow.
+      </p>
+
+      <div class="hero__cta" data-reveal>
+        <a href="register.html" class="btn btn--solid btn--lg">
+          Register Now <i class="fa-solid fa-arrow-right-long"></i>
+        </a>
+        <a href="login.html" class="btn btn--outline-light btn--lg">Login</a>
+      </div>
+
+      <div class="event-strip" data-reveal>
+        <div class="event-card">
+          <i class="fa-regular fa-calendar"></i>
+          <div>
+            <span class="event-card__label">Date</span>
+            <span class="event-card__value">31st July, 2026</span>
+          </div>
+        </div>
+        <div class="event-card">
+          <i class="fa-regular fa-clock"></i>
+          <div>
+            <span class="event-card__label">Time</span>
+            <span class="event-card__value">9:00 AM Prompt</span>
+          </div>
+        </div>
+        <div class="event-card">
+          <i class="fa-solid fa-location-dot"></i>
+          <div>
+            <span class="event-card__label">Location</span>
+            <span class="event-card__value">Owerri, Imo State</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button class="hero__scroll" id="scrollDown" aria-label="Scroll to About section">
+      <span>Scroll</span>
+      <i class="fa-solid fa-chevron-down"></i>
+    </button>
+  </header>
+
+  <!-- ================= ABOUT ================= -->
+  <section class="section" id="about">
+    <div class="container about__grid">
+      <div class="about__figure" data-reveal>
+        <div class="about__frame">
+          <img src="logo.png" alt="">
+          <!-- <svg viewBox="0 0 300 340" class="about__motif" aria-hidden="true">
+            <use href="#adire-motif"></use>
+          </svg> -->
+          <div class="about__badge">
+            <span class="about__badge-num">01</span>
+            <span>Youth Tech Empowerment Seminar</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="about__copy">
+        <p class="eyebrow" data-reveal>About the Programme</p>
+        <h2 class="section__title" data-reveal>Rooted in heritage.<br>Built for the future.</h2>
+        <p class="section__lead" data-reveal>
+          The Yoruba Political Support Group (YPSG) is a coalition committed to the political,
+          economic, and social advancement of Yoruba communities. Through the YPSG Youth Tech
+          Empowerment Seminar, that commitment extends into a new frontier: technology.
+        </p>
+        <p data-reveal>
+          This seminar brings together young people, industry practitioners, and mentors for a
+          single day of practical, honest conversation about where technology is headed — and how
+          our youth can lead, not follow. Our goal is simple: hand every participant a clearer path
+          into a tech-enabled future, backed by real skills, real networks, and real opportunity.
+        </p>
+
+        <ul class="about__points" data-reveal>
+          <li><i class="fa-solid fa-check"></i> Practical exposure to in-demand tech fields</li>
+          <li><i class="fa-solid fa-check"></i> Direct mentorship from working professionals</li>
+          <li><i class="fa-solid fa-check"></i> A certificate that recognises your participation</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TOPICS ================= -->
+  <section class="section section--tinted" id="topics">
+    <div class="container">
+      <div class="section__head">
+        <p class="eyebrow" data-reveal>What You'll Explore</p>
+        <h2 class="section__title" data-reveal>Six fields. One future.</h2>
+        <p class="section__lead" data-reveal>Every session is chosen to open a door — pick the ones that speak to you.</p>
+      </div>
+
+      <div class="grid grid--3">
+        <article class="topic-card" data-reveal>
+          <div class="topic-card__icon"><i class="fa-solid fa-brain"></i></div>
+          <h3>Artificial Intelligence</h3>
+          <p>Understand how AI is reshaping industries and how to build a career around it.</p>
+        </article>
+        <article class="topic-card" data-reveal>
+          <div class="topic-card__icon"><i class="fa-solid fa-code"></i></div>
+          <h3>Web Development</h3>
+          <p>From first line of code to first live project — the foundations that matter.</p>
+        </article>
+        <article class="topic-card" data-reveal>
+          <div class="topic-card__icon"><i class="fa-solid fa-chart-line"></i></div>
+          <h3>Data Analytics</h3>
+          <p>Turn raw numbers into decisions. Learn the tools driving modern insight.</p>
+        </article>
+        <article class="topic-card" data-reveal>
+          <div class="topic-card__icon"><i class="fa-solid fa-helicopter"></i></div>
+          <h3>Drone Technology</h3>
+          <p>A hands-on look at aerial tech and the industries it's already transforming.</p>
+        </article>
+        <article class="topic-card" data-reveal>
+          <div class="topic-card__icon"><i class="fa-solid fa-clapperboard"></i></div>
+          <h3>Animation &amp; Motion Graphics</h3>
+          <p>The craft behind the screens — storytelling through motion and design.</p>
+        </article>
+        <article class="topic-card" data-reveal>
+          <div class="topic-card__icon"><i class="fa-solid fa-lightbulb"></i></div>
+          <h3>Innovation &amp; Entrepreneurship</h3>
+          <p>Turning tech skill into ventures — building something the world needs.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= WHY ATTEND / BENEFITS ================= -->
+  <section class="section" id="benefits">
+    <div class="container">
+      <div class="section__head">
+        <p class="eyebrow" data-reveal>Why Attend</p>
+        <h2 class="section__title" data-reveal>What you'll leave with</h2>
+      </div>
+
+      <div class="grid grid--3 grid--benefits">
+        <div class="benefit-card" data-reveal>
+          <i class="fa-solid fa-chalkboard-user"></i>
+          <h3>Learn from Professionals</h3>
+          <p>Sessions led by practitioners actively working in their fields.</p>
+        </div>
+        <div class="benefit-card" data-reveal>
+          <i class="fa-solid fa-briefcase"></i>
+          <h3>Career Opportunities</h3>
+          <p>Insight into real pathways and roles across the tech industry.</p>
+        </div>
+        <div class="benefit-card" data-reveal>
+          <i class="fa-solid fa-laptop-code"></i>
+          <h3>Digital Skills</h3>
+          <p>Foundational, practical skills you can build on immediately.</p>
+        </div>
+        <div class="benefit-card" data-reveal>
+          <i class="fa-solid fa-people-group"></i>
+          <h3>Networking</h3>
+          <p>Meet peers and professionals who share your ambition.</p>
+        </div>
+        <div class="benefit-card" data-reveal>
+          <i class="fa-solid fa-hands-holding-circle"></i>
+          <h3>Mentorship</h3>
+          <p>Guidance that continues beyond the seminar itself.</p>
+        </div>
+        <div class="benefit-card" data-reveal>
+          <i class="fa-solid fa-certificate"></i>
+          <h3>Certificate of Participation</h3>
+          <p>An official certificate, generated and emailed directly to you.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EVENT INFO ================= -->
+  <section class="section section--dark" id="event-info">
+    <div class="hero__pattern hero__pattern--dark" aria-hidden="true"></div>
+    <div class="container event-info__grid">
+      <div>
+        <p class="eyebrow eyebrow--light" data-reveal>Event Information</p>
+        <h2 class="section__title section__title--light" data-reveal>Mark the date.</h2>
+        <p class="section__lead section__lead--light" data-reveal>
+          One day, fully dedicated to the youth. Here's what to expect.
+        </p>
+      </div>
+
+      <div class="info-list" data-reveal>
+        <div class="info-list__item">
+          <i class="fa-regular fa-calendar"></i>
+          <div><span>Date</span><strong>31st July, 2026</strong></div>
+        </div>
+        <div class="info-list__item">
+          <i class="fa-regular fa-clock"></i>
+          <div><span>Time</span><strong>9:00 AM Prompt</strong></div>
+        </div>
+        <div class="info-list__item">
+          <i class="fa-solid fa-location-dot"></i>
+          <div><span>Venue</span><strong>14 Okigwe Road by Ama Jk, after AP Filling station (Yoruba Community Secretariat)</strong></div>
+        </div>
+        <div class="info-list__item">
+          <i class="fa-solid fa-users"></i>
+          <div><span>Audience</span><strong>Youths interested in technology &amp; innovation</strong></div>
+        </div>
+        <div class="info-list__item">
+          <i class="fa-solid fa-flag-checkered"></i>
+          <div><span>Outcome</span><strong>Practical exposure, mentorship &amp; a certificate of participation</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= FAQ ================= -->
+  <section class="section" id="faq">
+    <div class="container container--narrow">
+      <div class="section__head">
+        <p class="eyebrow" data-reveal>Questions</p>
+        <h2 class="section__title" data-reveal>Frequently asked questions</h2>
+      </div>
+
+      <div class="accordion" data-reveal>
+        <div class="accordion__item is-open">
+          <button class="accordion__trigger" aria-expanded="true">
+            <span>Who can attend the seminar?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="accordion__panel">
+            <p>Any youth with an interest in technology and innovation is welcome — no prior experience is required.</p>
+          </div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__trigger" aria-expanded="false">
+            <span>Is the seminar free to attend?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="accordion__panel">
+            <p>Yes. Registration through the YPSG Tech Portal is completely free for all participants.</p>
+          </div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__trigger" aria-expanded="false">
+            <span>How do I get my certificate?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="accordion__panel">
+            <p>After logging in, you'll enter your name exactly as it should appear, and your certificate is generated and emailed to you immediately.</p>
+          </div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__trigger" aria-expanded="false">
+            <span>Can I edit my name after generating the certificate?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="accordion__panel">
+            <p>No. Once submitted, the name on your certificate cannot be changed, so please double-check it before generating.</p>
+          </div>
+        </div>
+        <div class="accordion__item">
+          <button class="accordion__trigger" aria-expanded="false">
+            <span>Do I need to bring anything?</span>
+            <i class="fa-solid fa-plus"></i>
+          </button>
+          <div class="accordion__panel">
+            <p>Just yourself, a notebook, and your curiosity. All seminar materials will be provided.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="section section--tinted" id="contact">
+    <div class="container contact__grid">
+      <div>
+        <p class="eyebrow" data-reveal>Get in Touch</p>
+        <h2 class="section__title" data-reveal>We're happy to help</h2>
+        <p class="section__lead" data-reveal>Questions about the seminar or your registration? Reach out any time.</p>
+
+        <div class="contact__list" data-reveal>
+          <div class="contact__row"><i class="fa-solid fa-envelope"></i> aiyegburojuemmanuel77@gmail.com</div>
+          <div class="contact__row"><i class="fa-solid fa-phone"></i> +234 808 530 8950 or +234 911 701 5009</div>
+          <div class="contact__row"><i class="fa-solid fa-location-dot"></i> Owerri, Imo State, Nigeria</div>
+        </div>
+
+        <!-- <div class="social-row" data-reveal>
+          <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+          <a href="#" aria-label="Twitter / X"><i class="fa-brands fa-x-twitter"></i></a>
+          <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        </div> -->
+      </div>
+
+      <div class="map-placeholder" data-reveal aria-hidden="true">
+        <!-- <i class="fa-solid fa-map-location-dot"></i> -->
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1985.7666224383865!2d7.029180242605093!3d5.487511585589754!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x104259a2e7eed24b%3A0x391b32dc72e5bf98!2sAma%20JK%2C%201%20Douglas%20Rd%2C%20Owerri%20460281%2C%20Imo!5e0!3m2!1sen!2sng!4v1784119701867!5m2!1sen!2sng" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>
+        <!-- <span>Map preview</span> -->
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <span class="navbar__logo-text navbar__logo-text--footer">YPSG<span>Tech Portal</span></span>
+      <p>Yoruba Political Support Group — Youth Tech Empowerment Seminar.</p>
+    </div>
+
+    <div class="footer__col">
+      <h4>Quick Links</h4>
+      <a href="#about">About</a>
+      <a href="#topics">Topics</a>
+      <a href="#benefits">Benefits</a>
+      <a href="#faq">FAQ</a>
+    </div>
+
+    <div class="footer__col">
+      <h4>Account</h4>
+      <a href="register.html">Register</a>
+      <a href="login.html">Login</a>
+    </div>
+  </div>
+  <div class="footer__bottom">
+    <p>&copy; <span id="year"></span> Yoruba Political Support Group. All rights reserved. &middot; <a href="admin-login.html" style="color:inherit; text-decoration:underline;">Admin</a></p>
+  </div>
+</footer>
+
+<!-- Hidden SVG defs: signature Adire x circuit motif, reused across the page -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="adire-motif">
+      <circle cx="150" cy="90" r="46" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <circle cx="150" cy="90" r="30" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <circle cx="150" cy="90" r="6" fill="currentColor"/>
+      <path d="M150 44 L150 6 M150 136 L150 190 M104 90 L60 90 M196 90 L240 90" stroke="currentColor" stroke-width="1.2"/>
+      <path d="M118 58 L84 24 M182 58 L216 24 M118 122 L84 156 M182 122 L216 156" stroke="currentColor" stroke-width="1.2"/>
+      <path d="M40 220 L80 190 L120 220 L80 250 Z" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <path d="M180 220 L220 190 L260 220 L220 250 Z" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <path d="M80 250 L80 300 M220 250 L220 300" stroke="currentColor" stroke-width="1.2"/>
+      <circle cx="80" cy="310" r="8" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <circle cx="220" cy="310" r="8" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <path d="M20 90 L0 90 M280 90 L300 90" stroke="currentColor" stroke-width="1.2"/>
+    </g>
+    <pattern id="adire-tile" x="0" y="0" width="120" height="120" patternUnits="userSpaceOnUse">
+      <use href="#adire-motif" transform="scale(0.4) translate(0,0)"></use>
+    </pattern>
+  </defs>
+</svg>
+
+<script src="js/main.js"></script>
+</body>
+</html>

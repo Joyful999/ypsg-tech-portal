@@ -1,0 +1,131 @@
+/* =========================================================
+   AUTH PAGES — REGISTER / LOGIN
+   ========================================================= */
+.auth-body { min-height: 100vh; }
+
+.auth { display: grid; grid-template-columns: 0.85fr 1.15fr; min-height: 100vh; }
+
+/* ---------- Brand panel (left) ---------- */
+.auth__brand {
+  position: relative; overflow: hidden;
+  background: radial-gradient(120% 120% at 15% 0%, #6b7f3d 0%, var(--olive) 45%, var(--olive-dark) 100%);
+  color: #fff; display: flex; flex-direction: column; justify-content: space-between;
+  padding: 44px;
+}
+.auth__brand-inner { display: flex; flex-direction: column; justify-content: space-between; height: 100%; position: relative; z-index: 1; }
+.auth__brand .navbar__logo { color: #fff; }
+.auth__brand .navbar__logo-mark { color: var(--gold); }
+
+.auth__brand-copy { max-width: 420px; margin: auto 0; }
+.auth__motif { width: 160px; color: rgba(212,175,55,0.55); margin-bottom: 28px; }
+.auth__brand-copy h2 { font-size: clamp(1.4rem, 2.4vw, 1.9rem); line-height: 1.35; margin-bottom: 16px; }
+.auth__brand-copy p { color: rgba(255,255,255,0.78); font-size: 0.98rem; max-width: 40ch; }
+.auth__brand-foot { color: rgba(255,255,255,0.55); font-size: 0.82rem; letter-spacing: 0.02em; }
+
+/* ---------- Form panel (right) ---------- */
+.auth__panel { display: flex; align-items: center; justify-content: center; padding: 60px 24px; background: var(--bg); }
+.auth__panel-inner { width: 100%; max-width: 420px; }
+
+.auth__back {
+  display: inline-flex; align-items: center; gap: 8px; font-size: 0.85rem; font-weight: 500;
+  color: var(--text-soft); margin-bottom: 36px; transition: color 0.25s var(--ease);
+}
+.auth__back:hover { color: var(--olive); }
+
+.auth__title { font-size: clamp(1.6rem, 3vw, 2rem); color: var(--olive-dark); margin-bottom: 10px; }
+.auth__subtitle { color: var(--text-soft); font-size: 0.94rem; margin-bottom: 32px; }
+.auth__link { color: var(--olive); font-weight: 600; }
+.auth__link:hover { text-decoration: underline; }
+
+/* ---------- Form fields ---------- */
+.auth-form { display: flex; flex-direction: column; gap: 22px; }
+.field { display: flex; flex-direction: column; gap: 8px; }
+.field label { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+
+.field__control {
+  display: flex; align-items: center; gap: 10px;
+  border: 1.5px solid rgba(51,51,51,0.15); border-radius: var(--radius-sm);
+  padding: 0 14px; background: #fff; transition: border-color 0.25s var(--ease), box-shadow 0.25s var(--ease);
+}
+.field__control i:first-child { color: var(--text-soft); font-size: 0.95rem; }
+.field__control input {
+  flex: 1; border: none; outline: none; padding: 13px 0; font-family: var(--font-body);
+  font-size: 0.95rem; color: var(--text); background: transparent;
+}
+.field__control:focus-within { border-color: var(--olive); box-shadow: 0 0 0 3px rgba(85,107,47,0.12); }
+.field.has-error .field__control { border-color: var(--error); box-shadow: 0 0 0 3px rgba(198,40,40,0.1); }
+.field.is-valid .field__control { border-color: var(--success); }
+
+.field__toggle { color: var(--text-soft); padding: 6px; display: flex; }
+.field__toggle:hover { color: var(--olive); }
+
+.field__error {
+  font-size: 0.8rem; color: var(--error); min-height: 1em;
+  opacity: 0; transform: translateY(-4px); transition: opacity 0.25s var(--ease), transform 0.25s var(--ease);
+}
+.field.has-error .field__error { opacity: 1; transform: translateY(0); }
+
+/* ---------- Field row (label + inline link, used on login) ---------- */
+.field__row { display: flex; align-items: center; justify-content: space-between; }
+.auth__link--small { font-size: 0.8rem; font-weight: 600; color: var(--olive); }
+.auth__link--small:hover { text-decoration: underline; }
+
+/* ---------- Custom "Remember me" checkbox ---------- */
+.checkbox {
+  display: flex; align-items: center; gap: 10px; cursor: pointer;
+  font-size: 0.88rem; color: var(--text); user-select: none; margin-top: -6px;
+}
+.checkbox input { position: absolute; opacity: 0; width: 0; height: 0; }
+.checkbox__box {
+  width: 19px; height: 19px; border-radius: 5px; border: 1.5px solid rgba(51,51,51,0.25);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  transition: background 0.2s var(--ease), border-color 0.2s var(--ease);
+}
+.checkbox__box i { font-size: 0.6rem; color: #fff; opacity: 0; transform: scale(0.6); transition: opacity 0.2s var(--ease), transform 0.2s var(--ease); }
+.checkbox input:checked + .checkbox__box { background: var(--olive); border-color: var(--olive); }
+.checkbox input:checked + .checkbox__box i { opacity: 1; transform: scale(1); }
+.checkbox input:focus-visible + .checkbox__box { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* ---------- Password strength meter ---------- */
+.strength { display: flex; align-items: center; gap: 10px; margin-top: -2px; }
+.strength__bar { flex: 1; height: 5px; border-radius: 4px; background: rgba(51,51,51,0.1); overflow: hidden; }
+.strength__bar span {
+  display: block; height: 100%; width: 0%; border-radius: 4px;
+  background: var(--error); transition: width 0.35s var(--ease), background 0.35s var(--ease);
+}
+.strength__label { font-size: 0.76rem; color: var(--text-soft); white-space: nowrap; }
+
+/* ---------- Submit button with loading state ---------- */
+.auth-submit { justify-content: center; width: 100%; margin-top: 8px; position: relative; }
+.btn-spinner {
+  display: none; width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff;
+  animation: spin 0.7s linear infinite;
+}
+.auth-submit.is-loading .btn-label { opacity: 0.6; }
+.auth-submit.is-loading .btn-spinner { display: inline-block; }
+.auth-submit:disabled { cursor: not-allowed; opacity: 0.85; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.auth__terms { margin-top: 22px; font-size: 0.78rem; color: var(--text-soft); text-align: center; }
+
+/* ---------- Toast notification ---------- */
+.toast {
+  position: fixed; top: 24px; right: 24px; z-index: 999;
+  display: flex; align-items: center; gap: 12px;
+  background: #fff; border-left: 4px solid var(--success); border-radius: var(--radius-sm);
+  padding: 16px 20px; box-shadow: var(--shadow-md); font-size: 0.9rem; font-weight: 500; color: var(--text);
+  transform: translateX(120%); opacity: 0; transition: transform 0.4s var(--ease), opacity 0.4s var(--ease);
+  max-width: 340px;
+}
+.toast.is-visible { transform: translateX(0); opacity: 1; }
+.toast.is-error { border-left-color: var(--error); }
+.toast i { color: var(--success); font-size: 1.15rem; }
+.toast.is-error i { color: var(--error); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 900px) {
+  .auth { grid-template-columns: 1fr; }
+  .auth__brand { display: none; }
+  .auth__panel { padding: 40px 20px; }
+}

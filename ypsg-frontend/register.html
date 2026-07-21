@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Register — YPSG Tech Portal</title>
+<meta name="description" content="Create your account to register for the YPSG Youth Tech Empowerment Seminar.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/auth.css">
+</head>
+<body class="auth-body">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="auth">
+  <!-- ============ BRAND PANEL ============ -->
+  <aside class="auth__brand" aria-hidden="true">
+    <div class="hero__pattern hero__pattern--dark"></div>
+    <div class="auth__brand-inner">
+      <a href="index.html" class="navbar__logo">
+        <img src="logo.png" alt="" style="width: 70px; height: 70px; border-radius: 50%;">
+        <!-- <span class="navbar__logo-mark">
+          <svg viewBox="0 0 40 40" width="34" height="34">
+            <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M20 6 L20 14 M20 26 L20 34 M6 20 L14 20 M26 20 L34 20" stroke="currentColor" stroke-width="1.4"/>
+            <circle cx="20" cy="20" r="5" fill="currentColor"/>
+          </svg>
+        </span> -->
+        <span class="navbar__logo-text">YPSG<span>Tech Portal</span></span>
+      </a>
+
+      <div class="auth__brand-copy">
+        <svg viewBox="0 0 300 340" class="auth__motif">
+          <use href="#adire-motif"></use>
+        </svg>
+        <h2>Preparing the youth for a better future through technology &amp; innovation.</h2>
+        <p>Create your account to reserve your seat, and unlock your certificate of participation after the seminar.</p>
+      </div>
+
+      <p class="auth__brand-foot">Yoruba Political Support Group &middot; Youth Tech Empowerment Seminar</p>
+    </div>
+  </aside>
+
+  <!-- ============ FORM PANEL ============ -->
+  <main class="auth__panel" id="main">
+    <div class="auth__panel-inner">
+      <a href="index.html" class="auth__back"><i class="fa-solid fa-arrow-left-long"></i> Back to home</a>
+
+      <p class="eyebrow">Create Account</p>
+      <h1 class="auth__title">Join the seminar</h1>
+      <p class="auth__subtitle">A few details and you're in. Already registered? <a href="login.html" class="auth__link">Log in instead</a>.</p>
+
+      <form id="registerForm" class="auth-form" novalidate>
+
+        <div class="field">
+          <label for="fullName">Full Name</label>
+          <div class="field__control">
+            <i class="fa-regular fa-user"></i>
+            <input type="text" id="fullName" name="fullName" placeholder="e.g. Adebayo Ogunleye" autocomplete="name" required>
+          </div>
+          <p class="field__error" id="fullNameError" role="alert"></p>
+        </div>
+
+        <div class="field">
+          <label for="email">Email Address</label>
+          <div class="field__control">
+            <i class="fa-regular fa-envelope"></i>
+            <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required>
+          </div>
+          <p class="field__error" id="emailError" role="alert"></p>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="field__control">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" id="password" name="password" placeholder="Create a password" autocomplete="new-password" required>
+            <button type="button" class="field__toggle" data-toggle-for="password" aria-label="Show password">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+          <div class="strength" aria-hidden="true">
+            <div class="strength__bar"><span id="strengthFill"></span></div>
+            <span class="strength__label" id="strengthLabel">Password strength</span>
+          </div>
+          <p class="field__error" id="passwordError" role="alert"></p>
+        </div>
+
+        <div class="field">
+          <label for="confirmPassword">Confirm Password</label>
+          <div class="field__control">
+            <i class="fa-solid fa-lock"></i>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Re-enter your password" autocomplete="new-password" required>
+            <button type="button" class="field__toggle" data-toggle-for="confirmPassword" aria-label="Show password">
+              <i class="fa-regular fa-eye"></i>
+            </button>
+          </div>
+          <p class="field__error" id="confirmPasswordError" role="alert"></p>
+        </div>
+
+        <button type="submit" class="btn btn--solid btn--lg auth-submit" id="registerBtn">
+          <span class="btn-label">Create Account</span>
+          <span class="btn-spinner" aria-hidden="true"></span>
+        </button>
+      </form>
+
+      <p class="auth__terms">By registering, you agree to be contacted with seminar updates and your certificate.</p>
+    </div>
+  </main>
+</div>
+
+<!-- ============ TOAST NOTIFICATION ============ -->
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <i class="fa-solid fa-circle-check"></i>
+  <span id="toastMessage">Account created successfully.</span>
+</div>
+
+<!-- Hidden SVG defs (shared signature motif) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <g id="adire-motif">
+      <circle cx="150" cy="90" r="46" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <circle cx="150" cy="90" r="30" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <circle cx="150" cy="90" r="6" fill="currentColor"/>
+      <path d="M150 44 L150 6 M150 136 L150 190 M104 90 L60 90 M196 90 L240 90" stroke="currentColor" stroke-width="1.2"/>
+      <path d="M118 58 L84 24 M182 58 L216 24 M118 122 L84 156 M182 122 L216 156" stroke="currentColor" stroke-width="1.2"/>
+      <path d="M40 220 L80 190 L120 220 L80 250 Z" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <path d="M180 220 L220 190 L260 220 L220 250 Z" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <path d="M80 250 L80 300 M220 250 L220 300" stroke="currentColor" stroke-width="1.2"/>
+      <circle cx="80" cy="310" r="8" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <circle cx="220" cy="310" r="8" fill="none" stroke="currentColor" stroke-width="1.2"/>
+      <path d="M20 90 L0 90 M280 90 L300 90" stroke="currentColor" stroke-width="1.2"/>
+    </g>
+  </defs>
+</svg>
+
+<script src="js/api.js"></script>
+<script src="js/auth-common.js"></script>
+<script src="js/register.js"></script>
+</body>
+</html>

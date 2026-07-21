@@ -1,0 +1,198 @@
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
+.dash-body { background: var(--bg-light); }
+
+/* ---------- Top bar ---------- */
+.dash-topbar { background: #fff; border-bottom: 1px solid rgba(51,51,51,0.08); position: sticky; top: 0; z-index: 50; }
+.dash-topbar__inner { max-width: var(--container); margin: 0 auto; padding: 16px 24px; display: flex; align-items: center; justify-content: space-between; }
+.dash-topbar .navbar__logo { color: var(--olive-dark); }
+.dash-topbar .navbar__logo-mark { color: var(--olive); }
+
+.dash-topbar__user { display: flex; align-items: center; gap: 14px; }
+.dash-topbar__user-text { display: flex; flex-direction: column; line-height: 1.25; }
+.dash-topbar__user-text strong { font-size: 0.9rem; color: var(--text); }
+.dash-topbar__user-text span { font-size: 0.78rem; color: var(--text-soft); }
+
+.dash-avatar {
+  width: 38px; height: 38px; border-radius: 50%; background: var(--olive); color: #fff;
+  display: flex; align-items: center; justify-content: center; font-family: var(--font-display);
+  font-weight: 700; font-size: 1rem; flex-shrink: 0;
+}
+
+/* ---------- Layout ---------- */
+.dash-main { padding: 40px 0 90px; }
+.dash-main .container { display: flex; flex-direction: column; gap: 28px; }
+
+/* ---------- Welcome card ---------- */
+.welcome-card {
+  position: relative; overflow: hidden; border-radius: var(--radius-lg);
+  background: radial-gradient(120% 140% at 10% 0%, #6b7f3d 0%, var(--olive) 45%, var(--olive-dark) 100%);
+  padding: 44px 40px; color: #fff; display: flex; align-items: center; justify-content: space-between; gap: 24px;
+}
+.welcome-card__content { position: relative; z-index: 1; max-width: 620px; }
+.welcome-card__content h1 { font-size: clamp(1.5rem, 3vw, 2.1rem); margin: 6px 0 14px; }
+.welcome-card__content p { color: rgba(255,255,255,0.82); font-size: 0.98rem; }
+.welcome-card__motif { position: relative; z-index: 1; width: 130px; color: rgba(212,175,55,0.4); flex-shrink: 0; }
+
+/* ---------- Info cards ---------- */
+.dash-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.card { background: #fff; border-radius: var(--radius-lg); padding: 30px; box-shadow: var(--shadow-sm); border: 1px solid rgba(51,51,51,0.05); }
+.card__head { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+.card__head i { color: var(--gold); font-size: 1.1rem; width: 22px; }
+.card__head h2 { font-size: 1.02rem; color: var(--olive-dark); }
+
+.info-def div { display: flex; align-items: center; justify-content: space-between; padding: 11px 0; border-bottom: 1px solid rgba(51,51,51,0.06); }
+.info-def div:last-child { border-bottom: none; }
+.info-def dt { font-size: 0.82rem; color: var(--text-soft); }
+.info-def dd { font-size: 0.9rem; font-weight: 600; color: var(--text); text-align: right; }
+
+.chip {
+  display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 0.74rem; font-weight: 600;
+  background: rgba(51,51,51,0.08); color: var(--text-soft);
+}
+.chip--success { background: rgba(46,125,50,0.12); color: var(--success); }
+.chip--gold { background: rgba(212,175,55,0.16); color: var(--gold-dark); }
+
+/* ---------- Certificate card ---------- */
+.cert-card { padding: 36px; }
+.cert-instruction { font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.cert-warning {
+  display: flex; gap: 10px; align-items: flex-start; background: rgba(212,175,55,0.1);
+  border: 1px solid rgba(212,175,55,0.3); border-radius: var(--radius-sm); padding: 12px 16px;
+  font-size: 0.84rem; color: var(--gold-dark);
+}
+.cert-warning i { margin-top: 2px; }
+
+/* ---------- Progress state ---------- */
+.progress { max-width: 460px; margin: 20px auto; text-align: center; }
+.progress__bar { height: 8px; border-radius: 6px; background: rgba(85,107,47,0.12); overflow: hidden; margin-bottom: 14px; }
+.progress__bar span { display: block; height: 100%; width: 0%; background: linear-gradient(90deg, var(--olive), var(--gold)); border-radius: 6px; transition: width 0.4s var(--ease); }
+.progress__label { color: var(--text-soft); font-size: 0.92rem; }
+
+/* ---------- Done state ---------- */
+.cert-success { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 24px; }
+.cert-success i { color: var(--success); font-size: 1.6rem; margin-top: 2px; }
+.cert-success h3 { font-size: 1.08rem; color: var(--olive-dark); margin-bottom: 4px; }
+.cert-success p { color: var(--text-soft); font-size: 0.92rem; }
+
+.cert-preview {
+  aspect-ratio: 297/210; max-width: 460px; margin: 0 auto 26px; border-radius: var(--radius-md);
+  background: linear-gradient(135deg, var(--olive-tint), #fff); border: 2px solid var(--gold);
+  display: flex; align-items: center; justify-content: center; padding: 20px; cursor: pointer;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.cert-preview:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+.cert-preview__inner { text-align: center; }
+.cert-preview__label { display: block; font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--olive); margin-bottom: 8px; }
+.cert-preview__inner strong { font-family: var(--font-display); font-size: 1.3rem; color: var(--olive-dark); }
+
+.cert-actions { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; margin-bottom: 20px; }
+.cert-locked-note { text-align: center; font-size: 0.8rem; color: var(--text-soft); display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+/* =========================================================
+   CERTIFICATE PREVIEW MODAL
+   ========================================================= */
+.modal { position: fixed; inset: 0; z-index: 200; display: flex; align-items: center; justify-content: center; padding: 24px; opacity: 0; pointer-events: none; transition: opacity 0.3s var(--ease); }
+.modal.is-open { opacity: 1; pointer-events: auto; }
+.modal__backdrop { position: absolute; inset: 0; background: rgba(28,34,15,0.72); backdrop-filter: blur(4px); }
+.modal__dialog {
+  position: relative; z-index: 1; max-width: 900px; width: 100%; max-height: 92vh; overflow-y: auto;
+  background: #fff; border-radius: var(--radius-lg); padding: 28px; box-shadow: var(--shadow-md);
+  transform: translateY(16px) scale(0.98); transition: transform 0.35s var(--ease);
+}
+.modal.is-open .modal__dialog { transform: translateY(0) scale(1); }
+.modal__close {
+  position: absolute; top: 16px; right: 16px; width: 36px; height: 36px; border-radius: 50%;
+  background: var(--bg-light); color: var(--text); display: flex; align-items: center; justify-content: center;
+  transition: background 0.25s var(--ease);
+}
+.modal__close:hover { background: rgba(85,107,47,0.14); }
+.modal__actions { display: flex; justify-content: center; margin-top: 24px; }
+
+/* ---------- Certificate itself ---------- */
+.certificate { aspect-ratio: 297/210; width: 100%; background: #fff; }
+.certificate__border {
+  height: 100%; border: 10px solid var(--olive); border-radius: 12px; padding: 14px;
+  background: linear-gradient(135deg, rgba(85,107,47,0.28) 0%, rgba(212,175,55,0.18) 45%, rgba(85,107,47,0.34) 100%);
+  box-shadow: inset 0 0 0 1px rgba(212,175,55,0.32);
+  position: relative;
+}
+.certificate__border::before,
+.certificate__border::after {
+  content: "";
+  position: absolute;
+  width: 30%; height: 30%;
+  border: 3px solid rgba(212,175,55,0.95);
+  border-color: rgba(212,175,55,0.95) transparent transparent rgba(212,175,55,0.95);
+  pointer-events: none;
+}
+.certificate__border::before {
+  top: 8px; left: 8px; border-radius: 0 0 20px 0;
+}
+.certificate__border::after {
+  bottom: 8px; right: 8px; border-color: transparent rgba(212,175,55,0.95) rgba(212,175,55,0.95) transparent; border-radius: 0 0 0 20px;
+}
+.certificate__inner {
+  height: 100%; border: 2px solid var(--gold); border-radius: 8px;
+  display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+  padding: clamp(16px, 3vw, 42px);
+  background-image: radial-gradient(rgba(85,107,47,0.08) 1px, transparent 1px);
+  background-size: 14px 14px;
+  position: relative;
+}
+.certificate__header { display: flex; align-items: center; justify-content: center; gap: 16px; width: 100%; margin-bottom: clamp(10px, 2vw, 18px); }
+.certificate__heading { display: flex; flex-direction: column; align-items: center; gap: 4px; color: var(--olive); flex: 1; }
+.certificate__logo { width: 56px; height: 56px; object-fit: contain; border-radius: 50%; box-shadow: 0 0 0 2px rgba(212,175,55,0.25); }
+.certificate__org { font-family: var(--font-display); font-weight: 700; font-size: clamp(0.75rem, 1.3vw, 1rem); color: var(--olive-dark); letter-spacing: 0.01em; }
+.certificate__event { font-size: clamp(0.62rem, 1vw, 0.82rem); color: var(--text-soft); letter-spacing: 0.08em; text-transform: uppercase; }
+
+.certificate__title { font-size: clamp(1.1rem, 2.6vw, 1.9rem); color: var(--olive-dark); margin: clamp(6px,1.5vw,14px) 0; }
+.certificate__presented { font-size: clamp(0.7rem, 1.2vw, 0.9rem); color: var(--text-soft); margin-bottom: 6px; }
+.certificate__name {
+  font-family: var(--font-display); font-weight: 700; font-size: clamp(1.5rem, 4vw, 2.6rem);
+  color: var(--gold-dark); margin-bottom: clamp(8px, 1.5vw, 16px); word-break: break-word; max-width: 90%;
+}
+.certificate__body { font-size: clamp(0.68rem, 1.15vw, 0.9rem); color: var(--text); max-width: 70ch; line-height: 1.6; }
+.certificate__date { font-size: clamp(0.68rem, 1.1vw, 0.85rem); color: var(--text-soft); margin-top: clamp(6px,1.5vw,14px); }
+
+.certificate__signatures { display: flex; align-items: center; justify-content: space-between; width: 100%; max-width: 680px; margin-top: clamp(16px, 3vw, 34px); gap: 14px; }
+.certificate__sig { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: clamp(0.6rem, 1vw, 0.75rem); color: var(--text-soft); position: relative; min-height: 96px; }
+.certificate__sig-line { display: block; border-top: 1px solid var(--text-soft); margin-bottom: 6px; width: 100%; max-width: 160px; }
+.certificate__sig-name { font-family: var(--font-display); font-size: 0.75rem; font-weight: 700; color: var(--olive-dark); }
+.certificate__sig-title { font-size: 0.62rem; line-height: 1.4; text-align: center; color: var(--text-soft); max-width: 180px; }
+.certificate__signature-img { height: 34px; width: auto; object-fit: contain; margin-bottom: 6px; }
+.certificate__seal { color: var(--olive); flex-shrink: 0; width: 112px; height: 112px; display: flex; align-items: center; justify-content: center; }
+.certificate__seal-emboss {
+  width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg, #d9b44a 0%, #f5e6a8 50%, #bf9129 100%);
+  color: var(--olive-dark); display: flex; flex-direction: column; align-items: center; justify-content: center;
+  text-align: center; font-family: var(--font-display); font-weight: 700; line-height: 1.15; padding: 10px;
+  box-shadow: inset 0 0 0 2px rgba(85,107,47,0.2), 0 8px 18px rgba(28,34,15,0.16);
+}
+.certificate__seal-emboss span { font-size: 0.64rem; letter-spacing: 0.06em; text-transform: uppercase; }
+
+/* ---------- Print (Download as PDF via browser print) ---------- */
+@media print {
+  body * { visibility: hidden; }
+  .modal, .modal .certificate, .modal .certificate * { visibility: visible; }
+  .modal { position: fixed; inset: 0; padding: 0; background: #fff; }
+  .modal__backdrop, .modal__close, .modal__actions { display: none !important; }
+  .modal__dialog { box-shadow: none; max-height: none; overflow: visible; padding: 0; max-width: none; }
+  .certificate { width: 100vw; height: 100vh; }
+  @page { size: landscape; margin: 10mm; }
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+@media (max-width: 980px) {
+  .dash-grid { grid-template-columns: 1fr; }
+  .welcome-card { flex-direction: column; text-align: center; padding: 36px 26px; }
+  .welcome-card__motif { width: 100px; }
+}
+@media (max-width: 600px) {
+  .dash-topbar__user-text { display: none; }
+  .certificate__signatures { flex-direction: column; }
+  .cert-actions { flex-direction: column; }
+  .cert-actions .btn { justify-content: center; }
+}
