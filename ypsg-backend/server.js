@@ -71,12 +71,19 @@ async function start() {
   }
 
   try {
-    await verifyMailer();
-    console.log('SMTP connection OK.');
-  } catch (err) {
-    console.error('Could not verify SMTP connection:', err.message);
-    console.error('Certificate emails will fail until SMTP_* variables in .env are correct.');
-  }
+  await verifyMailer();
+  console.log("✅ SMTP connection OK.");
+} catch (err) {
+  console.error("SMTP ERROR:");
+  console.error(err);
+}
+  // try {
+  //   await verifyMailer();
+  //   console.log('SMTP connection OK.');
+  // } catch (err) {
+  //   console.error('Could not verify SMTP connection:', err.message);
+  //   console.error('Certificate emails will fail until SMTP_* variables in .env are correct.');
+  // }
 
   app.listen(PORT, () => {
     console.log(`YPSG Tech Portal API listening on port ${PORT} (${process.env.NODE_ENV || 'development'})`);
