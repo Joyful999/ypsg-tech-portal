@@ -76,53 +76,92 @@ async function generate(req, res) {
     filePath: relativePath
   });
 
+
   // Attempt to email certificate immediately.
-  // Email failure should NOT prevent certificate generation/download.
-  try {
-    await sendEmail({
-      from: `"${process.env.MAIL_FROM_NAME}" <${process.env.MAIL_FROM_ADDRESS}>`,
-      to: user.email,
-      subject: 'YPSG Youth Tech Empowerment Seminar Certificate',
-      html: certificateEmailHtml({
-        fullName: certificateName.trim()
-      }),
-      attachments: [
-        {
-          filename: 'YPSG-Certificate.pdf',
-          path: absolutePath
-        }
-      ]
-    });
+// Email failure should NOT prevent certificate generation/download.
+try {
+  // Read the generated PDF into memory.
+  // Resend accepts the PDF as a Buffer attachment.
+  const certificateBuffer = fs.readFileSync(absolutePath);
 
-    await certificateModel.markEmailed(certificate.id);
+await sendEmail({
+  from: `"${process.env.MAIL_FROM_NAME}" <${process.env.MAIL_FROM_ADDRESS}>`,
+  to: user.email,
+  subject: 'YPSG Youth Tech Empowerment Seminar Certificate',
+  html: certificateEmailHtml({
+    fullName: certificateName.trim()
+  }),
+  attachments: [
+    {
+      filename: 'YPSG-Certificate.pdf',
+      content: certificateBuffer
+    }
+  ]
+});
 
-    console.log(
-      `Certificate email sent successfully to ${user.email}`
-    );
+  await certificateModel.markEmailed(certificate.id);
 
-  } catch (err) {
-    console.error(
-      'Failed to send certificate email:',
-      err
-    );
-
-    await certificateModel.markEmailFailed(certificate.id);
-  }
-
-  const updated = await certificateModel.findById(
-    certificate.id
+  console.log(
+    `Certificate email sent successfully to ${user.email}`
   );
 
-  return res.status(201).json({
-    message: 'Certificate generated successfully.',
-    certificate: {
-      name: updated.certificate_name,
-      status: updated.status,
-      generatedAt: updated.generated_at,
-      emailedAt: updated.emailed_at
-    }
-  });
+} catch (err) {
+  console.error(
+    'Failed to send certificate email:',
+    err
+  );
+
+  await certificateModel.markEmailFailed(certificate.id);
 }
+}
+
+  // Attempt to email certificate immediately.
+  // Email failure should NOT prevent certificate generation/download.
+//   try {
+//     await sendEmail({
+//       from: `"${process.env.MAIL_FROM_NAME}" <${process.env.MAIL_FROM_ADDRESS}>`,
+//       to: user.email,
+//       subject: 'YPSG Youth Tech Empowerment Seminar Certificate',
+//       html: certificateEmailHtml({
+//         fullName: certificateName.trim()
+//       }),
+//       attachments: [
+//         {
+//           filename: 'YPSG-Certificate.pdf',
+//           path: absolutePath
+//         }
+//       ]
+//     });
+
+//     await certificateModel.markEmailed(certificate.id);
+
+//     console.log(
+//       `Certificate email sent successfully to ${user.email}`
+//     );
+
+//   } catch (err) {
+//     console.error(
+//       'Failed to send certificate email:',
+//       err
+//     );
+
+//     await certificateModel.markEmailFailed(certificate.id);
+//   }
+
+//   const updated = await certificateModel.findById(
+//     certificate.id
+//   );
+
+//   return res.status(201).json({
+//     message: 'Certificate generated successfully.',
+//     certificate: {
+//       name: updated.certificate_name,
+//       status: updated.status,
+//       generatedAt: updated.generated_at,
+//       emailedAt: updated.emailed_at
+//     }
+//   });
+// }
 
 async function status(req, res) {
   const certificate =

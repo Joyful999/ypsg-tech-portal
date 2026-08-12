@@ -10,7 +10,7 @@ async function sendEmail({
   attachments = []
 }) {
   try {
-    const result = await resend.emails.send({
+    const { data, error } = await resend.emails.send({
       from,
       to,
       subject,
@@ -18,9 +18,15 @@ async function sendEmail({
       attachments
     });
 
-    console.log('Email sent successfully:', result);
+    // Resend can return an error without throwing.
+    if (error) {
+      console.error('Resend email error:', error);
+      throw new Error(error.message || 'Resend failed to send the email.');
+    }
 
-    return result;
+    console.log('Email sent successfully:', data);
+
+    return data;
   } catch (error) {
     console.error('Email sending failed:', error);
     throw error;
@@ -51,53 +57,3 @@ module.exports = {
   sendEmail,
   verifyMailer
 };
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// const nodemailer = require('nodemailer');
-
-// const transporter = nodemailer.createTransport({
-//   host: process.env.SMTP_HOST,
-//   port: Number(process.env.SMTP_PORT),
-//   secure: process.env.SMTP_SECURE === 'true',
-
-//   auth: {
-//     user: process.env.SMTP_USER,
-//     pass: process.env.SMTP_PASSWORD,
-//   },
-
-//   connectionTimeout: 30000,
-//   greetingTimeout: 30000,
-//   socketTimeout: 30000,
-
-//   logger: true,
-//   debug: true
-// });
-
-// async function verifyMailer() {
-//   console.log("SMTP CONFIG:");
-//   console.log({
-//     host: process.env.SMTP_HOST,
-//     port: process.env.SMTP_PORT,
-//     secure: process.env.SMTP_SECURE,
-//     user: process.env.SMTP_USER
-//   });
-
-//   await transporter.verify();
-// }
-
-// module.exports = { transporter, verifyMailer };
