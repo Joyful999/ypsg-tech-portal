@@ -6,7 +6,7 @@
    Update API_BASE_URL to match wherever the Express server is
    actually running/deployed.
    ========================================================= */
-const API_BASE_URL = 'https://ypsg-tech-portal-production.up.railway.app/';
+const API_BASE_URL = 'https://ypsg-tech-portal-production.up.railway.app/api';
 /**
  * Wraps fetch() with JSON handling, auth headers, and a consistent
  * error shape. Throws an Error with:
