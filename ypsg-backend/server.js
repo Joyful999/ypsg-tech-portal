@@ -73,9 +73,9 @@ async function start() {
 
   try {
   await verifyMailer();
-  console.log("✅ SMTP connection OK.");
+  console.log("✅ Brevo API connection/configuration OK.");
 } catch (err) {
-  console.error("SMTP ERROR:");
+  console.error("BREVO API ERROR:");
   console.error(err);
 }
   // try {
