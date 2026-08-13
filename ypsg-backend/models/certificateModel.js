@@ -47,21 +47,22 @@ async function deleteForRegeneration(userId) {
   await pool.query('DELETE FROM certificates WHERE user_id = ?', [userId]);
 }
 
-async function updateFilePath(id, filePath) {
+async function updateFilePath(certificateId, filePath) {
   const [result] = await pool.query(
     'UPDATE certificates SET file_path = ? WHERE id = ?',
-    [filePath, id]
+    [filePath, certificateId]
   );
 
   return result.affectedRows > 0;
 }
 
 module.exports = {
+  create,
   findByUserId,
   findById,
-  create,
   markEmailed,
   markEmailFailed,
   allowRegeneration,
-  deleteForRegeneration
+  deleteForRegeneration,
+  updateFilePath
 };
