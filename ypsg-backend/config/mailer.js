@@ -1,6 +1,6 @@
 // =========================================================
 // YPSG Tech Portal — Brevo API Mailer
-// Uses HTTPS API instead of SMTP
+// HTTPS API — no SMTP
 // =========================================================
 
 const fs = require('fs');
@@ -21,58 +21,82 @@ async function sendEmail({
       throw new Error('MAIL_FROM_ADDRESS is not configured.');
     }
 
-    // Convert local file attachments to Base64 for Brevo API
     const formattedAttachments = [];
 
     for (const attachment of attachments) {
-      if (!attachment.path) continue;
+      if (!attachment.path) {
+        console.warn('Attachment has no path:', attachment);
+        continue;
+      }
 
       if (!fs.existsSync(attachment.path)) {
         throw new Error(
-          `Email attachment file not found: ${attachment.path}`
+          `Attachment file does not exist: ${attachment.path}`
         );
       }
 
-      const content = fs.readFileSync(attachment.path).toString('base64');
+      const stats = fs.statSync(attachment.path);
+
+      console.log('Preparing email attachment:', {
+        path: attachment.path,
+        filename: attachment.filename,
+        size: stats.size
+      });
+
+      if (stats.size === 0) {
+        throw new Error(
+          `Attachment file is empty: ${attachment.path}`
+        );
+      }
+
+      const fileContent = fs.readFileSync(attachment.path);
 
       formattedAttachments.push({
-        name: attachment.filename || 'attachment',
-        content
+        name: attachment.filename || 'attachment.pdf',
+        content: fileContent.toString('base64')
       });
     }
+
+    console.log(
+      `Email contains ${formattedAttachments.length} attachment(s).`
+    );
+
+    const emailPayload = {
+      sender: {
+        name: process.env.MAIL_FROM_NAME || 'YPSG Tech Portal',
+        email: process.env.MAIL_FROM_ADDRESS
+      },
+
+      to: [
+        {
+          email: to
+        }
+      ],
+
+      subject,
+
+      htmlContent: html
+    };
+
+    // Only add attachment property when an attachment exists
+    if (formattedAttachments.length > 0) {
+      emailPayload.attachment = formattedAttachments;
+    }
+
+    console.log('Sending email through Brevo API...');
 
     const response = await fetch(
       'https://api.brevo.com/v3/smtp/email',
       {
         method: 'POST',
+
         headers: {
-          'accept': 'application/json',
+          accept: 'application/json',
           'api-key': process.env.BREVO_API_KEY,
           'content-type': 'application/json'
         },
-        body: JSON.stringify({
-          sender: {
-            name:
-              process.env.MAIL_FROM_NAME ||
-              'YPSG Tech Portal',
-            email: process.env.MAIL_FROM_ADDRESS
-          },
 
-          to: [
-            {
-              email: to
-            }
-          ],
-
-          subject,
-
-          htmlContent: html,
-
-          attachment:
-            formattedAttachments.length > 0
-              ? formattedAttachments
-              : undefined
-        })
+        body: JSON.stringify(emailPayload)
       }
     );
 
