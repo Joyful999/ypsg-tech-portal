@@ -1,10 +1,20 @@
 // =========================================================
-// YPSG Tech Portal — Brevo API Mailer
-// HTTPS API — no SMTP
+// YPSG Tech Portal — Brevo Email Configuration
 // =========================================================
 
 const fs = require('fs');
+const { BrevoClient } = require('@getbrevo/brevo');
 
+const brevo = new BrevoClient({
+  apiKey: process.env.BREVO_API_KEY
+});
+
+/**
+ * Send an email through Brevo.
+ *
+ * Attachments must be converted to base64 because
+ * Brevo's API does not accept a local filesystem path.
+ */
 async function sendEmail({
   from,
   to,
@@ -13,20 +23,11 @@ async function sendEmail({
   attachments = []
 }) {
   try {
-    if (!process.env.BREVO_API_KEY) {
-      throw new Error('BREVO_API_KEY is not configured.');
-    }
-
-    if (!process.env.MAIL_FROM_ADDRESS) {
-      throw new Error('MAIL_FROM_ADDRESS is not configured.');
-    }
-
-    const formattedAttachments = [];
-
-    for (const attachment of attachments) {
+    const formattedAttachments = attachments.map((attachment) => {
       if (!attachment.path) {
-        console.warn('Attachment has no path:', attachment);
-        continue;
+        throw new Error(
+          `Attachment path is missing for ${attachment.filename}`
+        );
       }
 
       if (!fs.existsSync(attachment.path)) {
@@ -35,86 +36,38 @@ async function sendEmail({
         );
       }
 
-      const stats = fs.statSync(attachment.path);
+      const fileBuffer = fs.readFileSync(attachment.path);
 
-      console.log('Preparing email attachment:', {
-        path: attachment.path,
-        filename: attachment.filename,
-        size: stats.size
-      });
+      return {
+        name: attachment.filename,
+        content: fileBuffer.toString('base64')
+      };
+    });
 
-      if (stats.size === 0) {
-        throw new Error(
-          `Attachment file is empty: ${attachment.path}`
-        );
-      }
-
-      const fileContent = fs.readFileSync(attachment.path);
-
-      formattedAttachments.push({
-        name: attachment.filename || 'attachment.pdf',
-        content: fileContent.toString('base64')
-      });
-    }
-
+    console.log('Sending email through Brevo API...');
     console.log(
       `Email contains ${formattedAttachments.length} attachment(s).`
     );
 
-    const emailPayload = {
+    const result = await brevo.transactionalEmails.sendTransacEmail({
       sender: {
         name: process.env.MAIL_FROM_NAME || 'YPSG Tech Portal',
         email: process.env.MAIL_FROM_ADDRESS
       },
-
       to: [
         {
           email: to
         }
       ],
-
       subject,
+      htmlContent: html,
+      attachment: formattedAttachments
+    });
 
-      htmlContent: html
-    };
-
-    // Only add attachment property when an attachment exists
-    if (formattedAttachments.length > 0) {
-      emailPayload.attachment = formattedAttachments;
-    }
-
-    console.log('Sending email through Brevo API...');
-
-    const response = await fetch(
-      'https://api.brevo.com/v3/smtp/email',
-      {
-        method: 'POST',
-
-        headers: {
-          accept: 'application/json',
-          'api-key': process.env.BREVO_API_KEY,
-          'content-type': 'application/json'
-        },
-
-        body: JSON.stringify(emailPayload)
-      }
+    console.log(
+      'Email sent successfully through Brevo:',
+      result
     );
-
-    const result = await response.json().catch(() => null);
-
-    if (!response.ok) {
-      console.error('Brevo API error:', {
-        status: response.status,
-        result
-      });
-
-      throw new Error(
-        result?.message ||
-        `Brevo API request failed with status ${response.status}`
-      );
-    }
-
-    console.log('Email sent successfully through Brevo:', result);
 
     return result;
 
@@ -125,6 +78,9 @@ async function sendEmail({
 }
 
 
+/**
+ * Verify Brevo configuration.
+ */
 async function verifyMailer() {
   console.log('BREVO API CONFIG:');
 
@@ -135,11 +91,11 @@ async function verifyMailer() {
   });
 
   if (!process.env.BREVO_API_KEY) {
-    throw new Error('BREVO_API_KEY is not configured.');
+    throw new Error('BREVO_API_KEY is not configured');
   }
 
   if (!process.env.MAIL_FROM_ADDRESS) {
-    throw new Error('MAIL_FROM_ADDRESS is not configured.');
+    throw new Error('MAIL_FROM_ADDRESS is not configured');
   }
 
   console.log('Brevo API configuration OK.');

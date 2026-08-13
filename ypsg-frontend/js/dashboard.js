@@ -206,3 +206,40 @@ function handleLogout() {
   clearUserSession();
   window.location.href = 'login.html';
 }
+
+
+/* =========================================================
+   TOAST NOTIFICATION
+   ========================================================= */
+function showToast(message, type = 'success') {
+  const toast = document.getElementById('toast');
+  const toastMessage = document.getElementById('toastMessage');
+
+  if (!toast || !toastMessage) {
+    console.warn('Toast elements not found.');
+    return;
+  }
+
+  // Set message
+  toastMessage.textContent = message;
+
+  // Reset classes
+  toast.className = 'toast';
+
+  // Add notification type
+  if (type === 'error') {
+    toast.classList.add('toast--error');
+  } else {
+    toast.classList.add('toast--success');
+  }
+
+  // Show toast
+  toast.classList.add('is-visible');
+
+  // Automatically hide after 5 seconds
+  clearTimeout(window.toastTimeout);
+
+  window.toastTimeout = setTimeout(() => {
+    toast.classList.remove('is-visible');
+  }, 5000);
+}
