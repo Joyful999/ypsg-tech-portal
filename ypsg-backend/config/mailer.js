@@ -1,24 +1,9 @@
 // =========================================================
-// YPSG Tech Portal — Email configuration
-// Brevo SMTP + Nodemailer
+// YPSG Tech Portal — Brevo API Mailer
+// Uses HTTPS API instead of SMTP
 // =========================================================
 
-const nodemailer = require('nodemailer');
-
-const transporter = nodemailer.createTransport({
-  host: process.env.SMTP_HOST || 'smtp-relay.brevo.com',
-  port: Number(process.env.SMTP_PORT) || 587,
-  secure: process.env.SMTP_SECURE === 'true',
-
-  auth: {
-    user: process.env.SMTP_USER,
-    pass: process.env.SMTP_PASSWORD
-  },
-
-  connectionTimeout: 30000,
-  greetingTimeout: 30000,
-  socketTimeout: 30000
-});
+const fs = require('fs');
 
 async function sendEmail({
   from,
@@ -28,63 +13,116 @@ async function sendEmail({
   attachments = []
 }) {
   try {
-    const result = await transporter.sendMail({
-      from,
-      to,
-      subject,
-      html,
-      attachments
-    });
+    if (!process.env.BREVO_API_KEY) {
+      throw new Error('BREVO_API_KEY is not configured.');
+    }
 
-    console.log('Email sent successfully:', {
-      messageId: result.messageId,
-      accepted: result.accepted,
-      rejected: result.rejected
-    });
+    if (!process.env.MAIL_FROM_ADDRESS) {
+      throw new Error('MAIL_FROM_ADDRESS is not configured.');
+    }
+
+    // Convert local file attachments to Base64 for Brevo API
+    const formattedAttachments = [];
+
+    for (const attachment of attachments) {
+      if (!attachment.path) continue;
+
+      if (!fs.existsSync(attachment.path)) {
+        throw new Error(
+          `Email attachment file not found: ${attachment.path}`
+        );
+      }
+
+      const content = fs.readFileSync(attachment.path).toString('base64');
+
+      formattedAttachments.push({
+        name: attachment.filename || 'attachment',
+        content
+      });
+    }
+
+    const response = await fetch(
+      'https://api.brevo.com/v3/smtp/email',
+      {
+        method: 'POST',
+        headers: {
+          'accept': 'application/json',
+          'api-key': process.env.BREVO_API_KEY,
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify({
+          sender: {
+            name:
+              process.env.MAIL_FROM_NAME ||
+              'YPSG Tech Portal',
+            email: process.env.MAIL_FROM_ADDRESS
+          },
+
+          to: [
+            {
+              email: to
+            }
+          ],
+
+          subject,
+
+          htmlContent: html,
+
+          attachment:
+            formattedAttachments.length > 0
+              ? formattedAttachments
+              : undefined
+        })
+      }
+    );
+
+    const result = await response.json().catch(() => null);
+
+    if (!response.ok) {
+      console.error('Brevo API error:', {
+        status: response.status,
+        result
+      });
+
+      throw new Error(
+        result?.message ||
+        `Brevo API request failed with status ${response.status}`
+      );
+    }
+
+    console.log('Email sent successfully through Brevo:', result);
 
     return result;
+
   } catch (error) {
     console.error('Email sending failed:', error);
     throw error;
   }
 }
 
+
 async function verifyMailer() {
-  console.log('SMTP CONFIG:');
+  console.log('BREVO API CONFIG:');
 
   console.log({
-    host: process.env.SMTP_HOST,
-    port: process.env.SMTP_PORT,
-    secure: process.env.SMTP_SECURE,
-    userConfigured: !!process.env.SMTP_USER,
-    passwordConfigured: !!process.env.SMTP_PASSWORD,
+    apiKeyConfigured: !!process.env.BREVO_API_KEY,
     fromName: process.env.MAIL_FROM_NAME,
     fromAddress: process.env.MAIL_FROM_ADDRESS
   });
 
-  if (!process.env.SMTP_HOST) {
-    throw new Error('SMTP_HOST is not configured');
-  }
-
-  if (!process.env.SMTP_USER) {
-    throw new Error('SMTP_USER is not configured');
-  }
-
-  if (!process.env.SMTP_PASSWORD) {
-    throw new Error('SMTP_PASSWORD is not configured');
+  if (!process.env.BREVO_API_KEY) {
+    throw new Error('BREVO_API_KEY is not configured.');
   }
 
   if (!process.env.MAIL_FROM_ADDRESS) {
-    throw new Error('MAIL_FROM_ADDRESS is not configured');
+    throw new Error('MAIL_FROM_ADDRESS is not configured.');
   }
 
-  await transporter.verify();
-
-  console.log('SMTP connection OK.');
+  console.log('Brevo API configuration OK.');
 }
 
+
 module.exports = {
-  transporter,
   sendEmail,
   verifyMailer
 };
