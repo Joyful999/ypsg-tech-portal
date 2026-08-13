@@ -65,21 +65,26 @@ async function listUsersWithCertificateStatus({ search, status }) {
 }
 
 async function getDashboardStats() {
-  const [[{ totalUsers }]] = await pool.query('SELECT COUNT(*) AS totalUsers FROM users');
-  const [[{ generated }]] = await pool.query(
-    "SELECT COUNT(*) AS generated FROM certificates WHERE status IN ('generated','email_sent','email_pending','email_failed')"
+  const [[{ totalUsers }]] = await pool.query(
+    'SELECT COUNT(*) AS totalUsers FROM users'
   );
-  const [[{ sent }]] = await pool.query("SELECT COUNT(*) AS sent FROM certificates WHERE status = 'email_sent'");
-  const [[{ pending }]] = await pool.query("SELECT COUNT(*) AS pending FROM certificates WHERE status = 'email_pending'");
 
-  return { totalUsers, generated, sent, pending };
+  const [[{ certificate_count }]] = await pool.query(
+    "SELECT COUNT(*) AS certificate_count FROM certificates WHERE status IN ('generated','email_sent','email_pending','email_failed')"
+  );
+
+  const [[{ sent }]] = await pool.query(
+    "SELECT COUNT(*) AS sent FROM certificates WHERE status = 'email_sent'"
+  );
+
+  const [[{ pending }]] = await pool.query(
+    "SELECT COUNT(*) AS pending FROM certificates WHERE status = 'email_pending'"
+  );
+
+  return {
+    totalUsers,
+    generated: certificate_count,
+    sent,
+    pending
+  };
 }
-
-module.exports = {
-  createUser,
-  findUserByEmail,
-  findUserById,
-  deleteUserById,
-  listUsersWithCertificateStatus,
-  getDashboardStats
-};

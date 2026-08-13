@@ -17,6 +17,7 @@ const certificateRoutes = require('./routes/certificateRoutes');
 const adminRoutes = require('./routes/adminRoutes');
 
 const app = express();
+app.set('trust proxy', 1);
 
 /* ---------- Security & parsing middleware ---------- */
 app.use(helmet());
