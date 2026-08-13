@@ -1,6 +1,24 @@
-const { Resend } = require('resend');
+// =========================================================
+// YPSG Tech Portal — Email configuration
+// Brevo SMTP + Nodemailer
+// =========================================================
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+  host: process.env.SMTP_HOST || 'smtp-relay.brevo.com',
+  port: Number(process.env.SMTP_PORT) || 587,
+  secure: process.env.SMTP_SECURE === 'true',
+
+  auth: {
+    user: process.env.SMTP_USER,
+    pass: process.env.SMTP_PASSWORD
+  },
+
+  connectionTimeout: 30000,
+  greetingTimeout: 30000,
+  socketTimeout: 30000
+});
 
 async function sendEmail({
   from,
@@ -10,7 +28,7 @@ async function sendEmail({
   attachments = []
 }) {
   try {
-    const { data, error } = await resend.emails.send({
+    const result = await transporter.sendMail({
       from,
       to,
       subject,
@@ -18,15 +36,13 @@ async function sendEmail({
       attachments
     });
 
-    // Resend can return an error without throwing.
-    if (error) {
-      console.error('Resend email error:', error);
-      throw new Error(error.message || 'Resend failed to send the email.');
-    }
+    console.log('Email sent successfully:', {
+      messageId: result.messageId,
+      accepted: result.accepted,
+      rejected: result.rejected
+    });
 
-    console.log('Email sent successfully:', data);
-
-    return data;
+    return result;
   } catch (error) {
     console.error('Email sending failed:', error);
     throw error;
@@ -34,26 +50,41 @@ async function sendEmail({
 }
 
 async function verifyMailer() {
-  console.log('RESEND CONFIG:');
+  console.log('SMTP CONFIG:');
 
   console.log({
-    apiKeyConfigured: !!process.env.RESEND_API_KEY,
+    host: process.env.SMTP_HOST,
+    port: process.env.SMTP_PORT,
+    secure: process.env.SMTP_SECURE,
+    userConfigured: !!process.env.SMTP_USER,
+    passwordConfigured: !!process.env.SMTP_PASSWORD,
     fromName: process.env.MAIL_FROM_NAME,
     fromAddress: process.env.MAIL_FROM_ADDRESS
   });
 
-  if (!process.env.RESEND_API_KEY) {
-    throw new Error('RESEND_API_KEY is not configured');
+  if (!process.env.SMTP_HOST) {
+    throw new Error('SMTP_HOST is not configured');
+  }
+
+  if (!process.env.SMTP_USER) {
+    throw new Error('SMTP_USER is not configured');
+  }
+
+  if (!process.env.SMTP_PASSWORD) {
+    throw new Error('SMTP_PASSWORD is not configured');
   }
 
   if (!process.env.MAIL_FROM_ADDRESS) {
     throw new Error('MAIL_FROM_ADDRESS is not configured');
   }
 
-  console.log('Resend configuration OK');
+  await transporter.verify();
+
+  console.log('SMTP connection OK.');
 }
 
 module.exports = {
+  transporter,
   sendEmail,
   verifyMailer
 };
