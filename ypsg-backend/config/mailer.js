@@ -1,17 +1,17 @@
 // =========================================================
-// Brevo API Mailer
+// YPSG Tech Portal — Brevo API Mailer
 // =========================================================
 
 const fs = require('fs');
-const Brevo = require('@getbrevo/brevo');
+const { BrevoClient } = require('@getbrevo/brevo');
 
-const apiInstance = new Brevo.TransactionalEmailsApi();
+const brevo = new BrevoClient({
+  apiKey: process.env.BREVO_API_KEY
+});
 
-apiInstance.setApiKey(
-  Brevo.TransactionalEmailsApiApiKeys.apiKey,
-  process.env.BREVO_API_KEY
-);
-
+// =========================================================
+// Send Email
+// =========================================================
 async function sendEmail({
   from,
   to,
@@ -20,55 +20,106 @@ async function sendEmail({
   attachments = []
 }) {
   try {
-    const sendSmtpEmail = new Brevo.SendSmtpEmail();
+    const attachmentList = attachments.map((attachment) => {
+      let content;
 
-    sendSmtpEmail.sender = {
-      name: process.env.MAIL_FROM_NAME || 'YPSG Tech Portal',
-      email: process.env.MAIL_FROM_ADDRESS
-    };
-
-    sendSmtpEmail.to = [
-      {
-        email: to
-      }
-    ];
-
-    sendSmtpEmail.subject = subject;
-    sendSmtpEmail.htmlContent = html;
-
-    // ---------------------------------------------------------
-    // Attachments
-    // ---------------------------------------------------------
-    if (attachments.length > 0) {
-      sendSmtpEmail.attachment = attachments.map((attachment) => {
-        let content;
-
-        if (attachment.path) {
-          content = fs.readFileSync(attachment.path).toString('base64');
-        } else if (attachment.content) {
-          content = Buffer.isBuffer(attachment.content)
-            ? attachment.content.toString('base64')
-            : Buffer.from(attachment.content).toString('base64');
+      // If a local file path is provided, read the PDF
+      // and convert it to base64 for Brevo.
+      if (attachment.path) {
+        if (!fs.existsSync(attachment.path)) {
+          throw new Error(
+            `Attachment file not found: ${attachment.path}`
+          );
         }
 
-        return {
-          name: attachment.filename,
-          content
-        };
-      });
+        content = fs
+          .readFileSync(attachment.path)
+          .toString('base64');
+      }
+
+      // If a Buffer was provided
+      else if (attachment.content) {
+        content = Buffer.isBuffer(attachment.content)
+          ? attachment.content.toString('base64')
+          : Buffer.from(attachment.content).toString('base64');
+      }
+
+      if (!content) {
+        throw new Error(
+          `Could not read attachment: ${attachment.filename}`
+        );
+      }
+
+      return {
+        name: attachment.filename,
+        content
+      };
+    });
+
+    const emailData = {
+      sender: {
+        name: process.env.MAIL_FROM_NAME || 'YPSG Tech Portal',
+        email: process.env.MAIL_FROM_ADDRESS
+      },
+
+      to: [
+        {
+          email: to
+        }
+      ],
+
+      subject,
+      htmlContent: html
+    };
+
+    // Only add attachment property when attachments exist
+    if (attachmentList.length > 0) {
+      emailData.attachment = attachmentList;
     }
 
-    const result = await apiInstance.sendTransacEmail(sendSmtpEmail);
+    console.log(
+      `Sending email through Brevo API to ${to}...`
+    );
 
-    console.log('Email sent successfully through Brevo:', result);
+    if (attachmentList.length > 0) {
+      console.log(
+        `Email contains ${attachmentList.length} attachment(s).`
+      );
+
+      attachmentList.forEach((attachment) => {
+        console.log(
+          `Attachment: ${attachment.name}`
+        );
+      });
+    } else {
+      console.log('Email contains 0 attachment(s).');
+    }
+
+    const result =
+      await brevo.transactionalEmails.sendTransacEmail(
+        emailData
+      );
+
+    console.log(
+      'Email sent successfully through Brevo:',
+      result
+    );
 
     return result;
+
   } catch (error) {
-    console.error('Brevo email sending failed:', error);
+    console.error(
+      'Brevo email sending failed:',
+      error
+    );
+
     throw error;
   }
 }
 
+// =========================================================
+// Verify Brevo Configuration
+// =========================================================
 async function verifyMailer() {
   console.log('BREVO API CONFIG:');
 
@@ -79,14 +130,20 @@ async function verifyMailer() {
   });
 
   if (!process.env.BREVO_API_KEY) {
-    throw new Error('BREVO_API_KEY is not configured');
+    throw new Error(
+      'BREVO_API_KEY is not configured'
+    );
   }
 
   if (!process.env.MAIL_FROM_ADDRESS) {
-    throw new Error('MAIL_FROM_ADDRESS is not configured');
+    throw new Error(
+      'MAIL_FROM_ADDRESS is not configured'
+    );
   }
 
-  console.log('Brevo API configuration OK.');
+  console.log(
+    'Brevo API configuration OK.'
+  );
 }
 
 module.exports = {
