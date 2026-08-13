@@ -213,10 +213,20 @@ async function download(req, res) {
   );
 }
 
+async function updateFilePath(certificateId, filePath) {
+  const [result] = await pool.query(
+    'UPDATE certificates SET file_path = ? WHERE id = ?',
+    [filePath, certificateId]
+  );
+
+  return result.affectedRows > 0;
+}
+
 module.exports = {
   generate,
   status,
-  download
+  download,
+  updateFilePath
 };
 
 
